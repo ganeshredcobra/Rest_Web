@@ -1,5 +1,5 @@
 #!flask/bin/python
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, request
 from random import randint
 
 app = Flask(__name__)
@@ -49,6 +49,29 @@ def get_SensorId(sensor_id):
 @app.route('/getsensorval', methods=['GET'])
 def get_SensorVals():
     return jsonify({'SensorList': SensorList})
+
+@app.route('/updatesensorval', methods=['POST'])
+def post_SensorVals():
+    if not request.json or not 'Sensorid' in request.json:
+        abort(400)
+    else:
+        #print request.json
+        #print request.json['Sensorid']
+        UpdatedList ={
+
+                    'Sensorid': request.json['Sensorid'],
+                    'SensorName': request.json['SensorName'],
+                    'description': request.json['description'], 
+                    'RelayStatusFlag': request.json['RelayStatusFlag'],
+                    'SensorValue': request.json['SensorValue']
+                    }
+        #print UpdatedList
+        SensorList.append(UpdatedList)
+        #print SensorList
+        return jsonify({'SensorList': SensorList}), 201
+        
+
+
 
 @app.route('/')
 def index():
