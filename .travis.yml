@@ -8,8 +8,10 @@ python:
 install:
 - pip install -r requirements.txt
 - pip install nose
+- pip install commands
 script:
-- nosetests
+- python app.py&
+- python test.py
 branches:
   only:
     - master
