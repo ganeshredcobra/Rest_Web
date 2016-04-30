@@ -8,8 +8,9 @@ python:
 install:
 - pip install -r requirements.txt
 - pip install nose
+before_script:
+- nohup python app.py &
 script:
-- python app.py&
 - python test.py
 branches:
   only:
